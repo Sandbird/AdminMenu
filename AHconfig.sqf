@@ -6,9 +6,9 @@
 /*  Use Admin Login PW ?  */ _UAP = false;    /* true or false */	/* recommended:  true */
 /*  Admin Login Password  */ _AdminPassword = "defaultz";
 /*  LOW ADMIN HERE        */ _LowLevel_List =   ["0","0","0"]; //do not have a , at the end.
-/*  NORMAL ADMIN HERE     */ _NormalLevel_List =["43633478","75982342","239424326","237976134","128130374","109291462","145198086","236793542","144013766","44292294","238520134","36015174","66064070","94316934","239197126"]; //do not have a , at the end.
-/*  DEVELOPERS HERE       */ _DevLevel_List =  ["94800774","18353670","0"]; //do not have a , at the end.
-/*  SUPER ADMIN HERE      */ _SuperLevel_List =  ["94800774","18353670","0"]; //do not have a , at the end.
+/*  NORMAL ADMIN HERE     */ _NormalLevel_List =["123456789","123456789"]; //do not have a , at the end.
+/*  DEVELOPERS HERE       */ _DevLevel_List =  ["123456789","123456789","0"]; //do not have a , at the end.
+/*  SUPER ADMIN HERE      */ _SuperLevel_List =  ["123456789","123456789","0"]; //do not have a , at the end.
 /*  BANNED PLAYER HERE    */ _BLOCKED =         ["0","0","0"]; //do not have a , at the end.
 /* ********************************************************************************* */
 /*  Top esc menu TXT      */ _TopOfESC = "DayZ Server"; //do not use " in this text.
