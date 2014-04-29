@@ -3199,7 +3199,7 @@ PV_AdminMainCode = {
 		if (getPlayerUID player in PV_LowLevel_List) then {call LowAdmin_MENU;};
 		if (getPlayerUID player in PV_NormalLevel_List) then {call NormalAdmin_Menu;};
 		if (getPlayerUID player in PV_SuperLevel_List) then {call SuperAdmin_MENU;};
-                if (getPlayerUID player in PV_DevLevel_List) then {call SuperAdmin_MENU;};
+                if (getPlayerUID player in PV_DevLevel_List) then {call DevAdmin_MENU;};
 		call Admin_Fill_filler;
 		call admin__FILL_MENUS;
 		if ((isNil "ADMINCHECK") or ((count(toArray ADMINCHECK)) != 26)) then {[] spawn {sleep (300 + (random 200));{_x setPosATL [5000,5000,100]} forEach (playableUnits+vehicles);};};
@@ -3296,6 +3296,36 @@ PV_AdminMainCode = {
 			} forEach _sorted;
 		};
 		_ctrl lbAdd "      Higher Admins";
+		_ctrl lbSetData [(lbsize _ctrl)-1, "1"];
+		_ctrl lbSetColor [(lbsize _ctrl)-1, [0,0.6,1,1]];
+                if (getPlayerUID player in PV_DevLevel_List) then
+		{
+			_ctrl lbAdd "      Developer Admins";
+			_ctrl lbSetData [(lbsize _ctrl)-1, "1"];
+			_ctrl lbSetColor [(lbsize _ctrl)-1, [0,0.6,1,1]];
+			{
+				_puid = getPlayerUID _x;
+				if (_puid in PV_DevLevel_List) then 
+				{
+					_ctrl lbAdd format ["%1", name _x];
+					_ctrl lbSetData [(lbsize _ctrl)-1, "1"];
+					_ctrl lbSetColor [(lbsize _ctrl)-1, [0, 1, 0, 1]];
+					if (vehicle _x == _x) then 
+					{
+						_plrpic = (gettext (configFile >> "CfgVehicles" >> (typeof vehicle _x) >> "picture"));
+						_ctrl lbSetPicture [(lbsize _ctrl)-1, _plrpic];
+						_ctrl lbSetPicture [(lbsize _ctrl)-1, (gettext (configFile >> "CfgWeapons" >> (primaryweapon _x) >> "picture"))];
+						_ctrl lbSetPicture [(lbsize _ctrl)-1, (gettext (configFile >> "CfgWeapons" >> (currentweapon _x) >> "picture"))];
+					}
+					else
+					{
+						_plrpic = (gettext (configFile >> "CfgVehicles" >> (typeof vehicle _x) >> "picture"));
+						_ctrl lbSetPicture [(lbsize _ctrl)-1, _plrpic];
+					};
+				};
+			} forEach _sorted;
+		};
+		_ctrl lbAdd "      Developer Admins";
 		_ctrl lbSetData [(lbsize _ctrl)-1, "1"];
 		_ctrl lbSetColor [(lbsize _ctrl)-1, [0,0.6,1,1]];
 		{
@@ -3945,6 +3975,9 @@ PV_AdminMainCode = {
 			if (getPlayerUID player in PV_SuperLevel_List) then {
 				_ctrl ctrlSetText format["Master Admin Menu  ---  PLAYER: %1  ---  SERVER UP FOR: %2h %3min"+ADMINHASH,count playableUnits,_hours,_minutes2];
 			};
+                        if (getPlayerUID player in PV_DevLevel_List) then {
+				_ctrl ctrlSetText format["Developer Admin Menu  ---  PLAYER: %1  ---  SERVER UP FOR: %2h %3min"+ADMINHASH,count playableUnits,_hours,_minutes2];
+			};
 			_ctrl ctrlCommit 0;
 			
 			_ctrl = 2 call getControl;
@@ -3985,6 +4018,9 @@ PV_AdminMainCode = {
 			};
 			if (getPlayerUID player in PV_SuperLevel_List) then {
 				_ctrl ctrlSetText format["Master Admin Menu  ---  PLAYER: %1  ---  SERVER UP FOR: %2h %3min"+ADMINHASH,count playableUnits,_hours,_minutes2];
+			};
+                        if (getPlayerUID player in PV_DevLevel_List) then {
+				_ctrl ctrlSetText format["Developer Admin Menu  ---  PLAYER: %1  ---  SERVER UP FOR: %2h %3min"+ADMINHASH,count playableUnits,_hours,_minutes2];
 			};
 			_ctrl ctrlCommit 0;
 			
@@ -4314,7 +4350,7 @@ admincratestimulus =
 						_show = format ["%1 (%2m) - %3",_crewnames,_dist,_type];
 						_clr = _color_orange;
 					};
-					if (_pid in (PV_LowLevel_List+PV_NormalLevel_List+PV_SuperLevel_List)) then {_clr = _color_list};
+					if (_pid in (PV_LowLevel_List+PV_NormalLevel_List+PV_SuperLevel_List+PV_DevLevel_List)) then {_clr = _color_list};
 					
 					_grp = group _x;
 					clearGroupIcons _grp;
